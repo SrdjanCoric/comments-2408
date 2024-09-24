@@ -1,4 +1,7 @@
-const Comment = () => {
+import { Comment as CommentType } from "../types";
+import moment from "moment";
+
+const Comment = ({ author, body, postedAt }: CommentType) => {
   return (
     <div className="comment">
       <hr />
@@ -6,10 +9,10 @@ const Comment = () => {
         <img src="https://i.postimg.cc/Y0RcrdHp/no-user-image.gif" alt="" />
       </div>
       <div className="header">
-        <h3 className="author">Louisa Leuschke</h3>
-        <span>2 hours ago</span>
+        <h3 className="author">{author}</h3>
+        <span>{moment(postedAt).fromNow()}</span>
       </div>
-      <p>Odit eligendi quasi deleniti ipsa cumque iusto ullam.</p>
+      <p>{body}</p>
     </div>
   );
 };

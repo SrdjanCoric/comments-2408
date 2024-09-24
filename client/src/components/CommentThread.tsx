@@ -1,11 +1,18 @@
+import { CommentWithReplies } from "../types";
 import Comment from "./Comment";
 
-const CommentThread = () => {
+interface CommentThreadProps {
+  comment: CommentWithReplies;
+}
+
+const CommentThread = ({ comment }: CommentThreadProps) => {
   return (
     <div className="parent-comment">
-      <Comment />
+      <Comment {...comment} />
       <div className="replies">
-        <Comment />
+        {comment.replies.map((reply) => {
+          return <Comment key={reply.id} {...comment} />;
+        })}
         <a href="#" className="show_more">
           Show More Replies (2)
         </a>
