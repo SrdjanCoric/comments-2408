@@ -11,7 +11,7 @@ const CommentThread = ({ comment }: CommentThreadProps) => {
       <Comment {...comment} />
       <div className="replies">
         {comment.replies.map((reply) => {
-          return <Comment key={reply.id} {...comment} />;
+          return <Comment key={reply.id} {...reply} />;
         })}
         <a href="#" className="show_more">
           Show More Replies (2)
