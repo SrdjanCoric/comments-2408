@@ -1,12 +1,15 @@
 import Comments from "./components/Comments";
 import AddCommentForm from "./components/AddCommentForm";
 import React from "react";
-
+import { ErrorBoundary } from "react-error-boundary";
 import { CommentWithReplies, NewComment } from "./types";
 import { createComment, getComments, getReplies } from "./services/comments";
+import FourOhFour from "./components/FourOhFour";
+import { ZodError } from "zod";
 
 function App() {
   const [comments, setComments] = React.useState<CommentWithReplies[]>([]);
+  const [error, setError] = React.useState(false);
 
   React.useEffect(() => {
     // fetch
@@ -15,6 +18,10 @@ function App() {
         const data = await getComments();
         setComments(data);
       } catch (e) {
+        if (e instanceof ZodError) {
+          console.log("Hello From Zod");
+        }
+        setError(true);
         console.error(e);
       }
     };
@@ -53,12 +60,18 @@ function App() {
     }
   };
 
+  if (error) {
+    return <FourOhFour />;
+  }
+
   // handler function to update state of comments with new replies
   return (
-    <div>
-      <Comments comments={comments} onReplies={handleReplies} />
-      <AddCommentForm onSubmit={handleSubmit} />
-    </div>
+    <ErrorBoundary fallback={<FourOhFour />}>
+      <div>
+        <Comments comments={comments} onReplies={handleReplies} />
+        <AddCommentForm onSubmit={handleSubmit} />
+      </div>
+    </ErrorBoundary>
   );
 }
 
