@@ -9,7 +9,7 @@ interface CommentsProps {
 const Comments = ({ comments, onReplies }: CommentsProps) => {
   return (
     <div className="comments">
-      <h2>Comments (2)</h2>
+      <h2>Comments ({comments.length})</h2>
       {comments.map((comment) => {
         return (
           <CommentThread

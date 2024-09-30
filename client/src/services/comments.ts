@@ -25,7 +25,9 @@ const getCommentsResponseSchema = z.array(commentSchema);
 const getRepliesResponseSchema = z.array(replySchema);
 
 export const getComments = async () => {
-  const { data } = await axios.get<CommentWithReplies[]>("/api/comments");
+  const { data } = await axios.get<CommentWithReplies[]>(
+    "http://localhost:3001/api/comments"
+  );
   return getCommentsResponseSchema.parse(data);
 };
 
